@@ -20,7 +20,7 @@ gott.run_test_under_cursor = function(args)
     local cmd = string.format("!cd %s && gott --pos %s:%s %s", dir, filename, pos, args or "")
 
     local opts = vim.tbl_deep_extend("force", {}, gott.opts)
-    opts.title = filename
+    opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
 
     builtin.exec(cmd, opts)
 end
@@ -36,7 +36,7 @@ gott.run_test_by_file = function(args)
     local cmd = string.format("!cd %s && gott --runFile %s %s", dir, filename, args or "")
 
     local opts = vim.tbl_deep_extend("force", {}, gott.opts)
-    opts.title = filename
+    opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
 
     builtin.exec(cmd, opts)
 end
