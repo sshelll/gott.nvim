@@ -64,11 +64,11 @@ Such as: `Plug 'sshelll/gott.nvim'`
 
 ```lua
 require('gott').setup{
-  	timeout = 3000,    -- try to close go test result notification after 3s.
+    timeout = 3000,    -- try to close go test result notification after 3s.
     keep = function () -- decide whether to keep the notification after timeout(3s).
         return false
     end,
-  	render = 'default' -- default / minimal / simple / compact, controls the notification style.
+    render = 'default' -- default / minimal / simple / compact, controls the notification style.
 }
 ```
 
@@ -79,7 +79,7 @@ require('gott').setup{
     keep = function () -- keep the notification after timeout, which means the notification window will not be closed.
         return true    -- if you want to close them, just call ':GottClear'.
     end,
-  	render = 'default'
+    render = 'default'
 }
 ```
 
