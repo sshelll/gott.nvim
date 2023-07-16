@@ -98,7 +98,9 @@ local function create_cmd()
             local args = unpack(opts.fargs)
             gott.run_test_under_cursor(args)
         end,
-        {}
+        {
+            nargs = "*",
+        }
     )
     vim.api.nvim_create_user_command(
         'GottFile',
@@ -106,7 +108,9 @@ local function create_cmd()
             local args = unpack(opts.fargs)
             gott.run_test_by_file(args)
         end,
-        {}
+        {
+            nargs = "*",
+        }
     )
     vim.api.nvim_create_user_command(
         'GottClear',
