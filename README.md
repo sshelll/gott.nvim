@@ -4,6 +4,12 @@ Exec go test under cursor easily.
 
 
 
+## Screenshot
+
+![](./img/demo.jpg)
+
+
+
 ## Requirements
 
 - gott (required)
