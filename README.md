@@ -6,7 +6,7 @@ Exec go test under cursor easily.
 
 ## Screenshot
 
-![](./img/demo.jpg)
+![](img/demo.jpg)
 
 
 
