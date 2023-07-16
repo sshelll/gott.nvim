@@ -45,7 +45,7 @@ function builtin.exec(cmd, opts)
         splited,
         vim.log.levels.INFO,
         {
-            title = "gott " + opts.title,
+            title = string.format("gott: %s", opts.title),
             render = opts.render,
             icon = "",
             timeout = opts.timeout,
