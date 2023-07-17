@@ -14,7 +14,8 @@ Exec go test under cursor easily.
 
 - gott (required)
 
-> Install: `go install github.com/sshelll/gott@latest `
+> Install: `go install github.com/sshelll/gott@latest`  
+> **Note: the version of `gott` should be greater than v1.4.0**
 
 - nvim-notify (required)
 
