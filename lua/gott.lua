@@ -31,7 +31,7 @@ gott.run_test_by_file = function(args)
 
     local filename = vim.fn.expand('%:p')
 
-    local cmd = string.format("gott --file=%s %s", filename, args or "")
+    local cmd = string.format("!gott --file=%s %s", filename, args or "")
 
     local opts = vim.tbl_deep_extend("force", {}, gott.opts)
     opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
