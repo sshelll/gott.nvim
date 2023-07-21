@@ -5,6 +5,14 @@
 local builtin = {}
 
 function builtin.pre_check()
+    -- check if the current file is a go test file
+    local filename = vim.fn.expand('%:p')
+    if not string.match(filename, "_test.go$") then
+        vim.api.nvim_err_writeln("gott: not a go test file.")
+        return false
+    end
+
+    -- check if gott is installed
     local cmd = vim.fn.executable('gott')
     if cmd == 0 then
         vim.api.nvim_err_writeln(
