@@ -70,10 +70,8 @@ function builtin.exec(cmd, opts)
 end
 
 function builtin.exec_async(cmd, opts)
-    local parsedCmd = vim.api.nvim_parse_cmd(cmd, {})
-
-    local async_exec = function()
-        local output = vim.api.nvim_cmd(parsedCmd, { output = true })
+    vim.system({ cmd }, { text = true }, function(obj)
+        local output = obj.stdout or obj.stderr
         local splited = builtin.split(output, "\n")
         table.remove(splited, 1)
 
@@ -91,10 +89,7 @@ function builtin.exec_async(cmd, opts)
         if not displayed then
             vim.api.nvim_err_writeln(output)
         end
-    end
-
-    local co = coroutine.create(async_exec)
-    coroutine.resume(co)
+    end)
 end
 
 return builtin
