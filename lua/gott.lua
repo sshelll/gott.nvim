@@ -40,7 +40,7 @@ gott.run_test_by_file = function(args)
     local opts = vim.tbl_deep_extend("force", {}, gott.opts)
     opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
 
-    builtin.exec(cmd, opts)
+    builtin.exec_async(cmd, opts)
 end
 
 local function create_cmd()

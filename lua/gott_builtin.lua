@@ -69,4 +69,32 @@ function builtin.exec(cmd, opts)
     end
 end
 
+function builtin.exec_async(cmd, opts)
+    local parsedCmd = vim.api.nvim_parse_cmd(cmd, {})
+
+    local async_exec = function()
+        local output = vim.api.nvim_cmd(parsedCmd, { output = true })
+        local splited = builtin.split(output, "\n")
+        table.remove(splited, 1)
+
+        local displayed = vim.notify(
+            splited,
+            vim.log.levels.INFO,
+            {
+                title = string.format("gott: %s", opts.title),
+                render = opts.render,
+                icon = "",
+                timeout = opts.timeout,
+                keep = opts.keep,
+            }
+        )
+        if not displayed then
+            vim.api.nvim_err_writeln(output)
+        end
+    end
+
+    local co = coroutine.create(async_exec)
+    coroutine.resume(co)
+end
+
 return builtin
