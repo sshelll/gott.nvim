@@ -10,6 +10,7 @@ gott.opts = {
         return true
     end,
     render = 'default',
+    test_args = '-v -vet=off',
 }
 
 gott.run_test_under_cursor = function(args)
@@ -47,7 +48,7 @@ local function create_cmd()
     vim.api.nvim_create_user_command(
         'Gott',
         function(opts)
-            local args = unpack(opts.fargs)
+            local args = string.format("%s %s", opts.args, gott.opts.test_args)
             gott.run_test_under_cursor(args)
         end,
         {
@@ -57,7 +58,7 @@ local function create_cmd()
     vim.api.nvim_create_user_command(
         'GottFile',
         function(opts)
-            local args = unpack(opts.fargs)
+            local args = string.format("%s %s", opts.args, gott.opts.test_args)
             gott.run_test_by_file(args)
         end,
         {

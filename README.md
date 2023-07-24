@@ -43,7 +43,7 @@ Such as: `Plug 'sshelll/gott.nvim'`
 :Gott
 :Gott -v
 :Gott -v -race
-:Gott -gcflags=all=-l -race
+:Gott -vet=off -race
 ```
 
 2. `GottFile`
@@ -54,7 +54,7 @@ Such as: `Plug 'sshelll/gott.nvim'`
 :GottFile
 :GottFile -v
 :GottFile -v -race
-:GottFile -gcflags=all=-l -race
+:GottFile -vet=off -race
 ```
 
 3. `GottClear`
@@ -71,7 +71,8 @@ require('gott').setup{
     keep = function () -- decide whether to keep the notification after timeout(3s).
         return false
     end,
-    render = 'default' -- default / minimal / simple / compact, controls the notification style.
+    render = 'default', -- default / minimal / simple / compact, controls the notification style.
+    test_args = '-v -race', -- these args will be passed to go test command at any time.
 }
 ```
 
@@ -82,7 +83,8 @@ require('gott').setup{
     keep = function () -- keep the notification after timeout, which means the notification window will not be closed.
         return true    -- if you want to close them, just call ':GottClear'.
     end,
-    render = 'default'
+    render = 'default',
+    test_args = '-v -vet=off',
 }
 ```
 
