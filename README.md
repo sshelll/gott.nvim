@@ -12,17 +12,20 @@ Exec go test under cursor easily.
 
 ## Requirements
 
-- gott (required)
+- [gott](https://github.com/sshelll/gott) (required)
 
 > Install: `go install github.com/sshelll/gott/v2@latest`  
 > **Note: the version of `gott` should be greater than v2.0.0, **
 >
 > **which means you <u>should not</u> use `go install github.com/sshelll/gott@latest`**
 
-- nvim-notify (required)
+- [nvim-notify](https://github.com/rcarriga/nvim-notify) (required)
 
 > Install: check https://github.com/rcarriga/nvim-notify for more details.
 
+- [vim-dispatch](https://github.com/tpope/vim-dispatch) (optional)
+
+> This plug allows you run test async, check https://github.com/tpope/vim-dispatch for more details.
 
 
 ## Install
@@ -61,7 +64,13 @@ Such as: `Plug 'sshelll/gott.nvim'`
 
 ​	Clear all the notifications.
 
+4. `GottAsync`
 
+   Run go test under cursor async. You have to install [vim-dispatch](https://github.com/tpope/vim-dispatch) first.
+   
+6. `GottFileAsync`
+
+   Run all go tests of the current buffer async. You have to install [vim-dispatch](https://github.com/tpope/vim-dispatch) first.
 
 ## Configuration
 
