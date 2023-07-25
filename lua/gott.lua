@@ -14,7 +14,7 @@ gott.opts = {
 }
 
 gott.run_test_under_cursor = function(args)
-    if not builtin.pre_check() then
+    if not builtin.pre_check(false) then
         return
     end
 
@@ -29,8 +29,25 @@ gott.run_test_under_cursor = function(args)
     builtin.exec(cmd, opts)
 end
 
+gott.run_test_under_cursor_async = function(args)
+    if not builtin.pre_check(true) then
+        return
+    end
+
+    local pos = builtin.get_pos_under_cursor()
+    local filename = vim.fn.expand('%:p')
+
+    local cmd = string.format("gott --file=%s --pos=%s %s", filename, pos, args or "")
+
+    local opts = vim.tbl_deep_extend("force", {}, gott.opts)
+    opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
+    opts.async = true
+
+    builtin.exec(cmd, opts)
+end
+
 gott.run_test_by_file = function(args)
-    if not builtin.pre_check() then
+    if not builtin.pre_check(false) then
         return
     end
 
@@ -40,6 +57,22 @@ gott.run_test_by_file = function(args)
 
     local opts = vim.tbl_deep_extend("force", {}, gott.opts)
     opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
+
+    builtin.exec(cmd, opts)
+end
+
+gott.run_test_by_file_async = function(args)
+    if not builtin.pre_check(true) then
+        return
+    end
+
+    local filename = vim.fn.expand('%:p')
+
+    local cmd = string.format("gott --file=%s %s", filename, args or "")
+
+    local opts = vim.tbl_deep_extend("force", {}, gott.opts)
+    opts.title = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':p:~:.')
+    opts.async = true
 
     builtin.exec(cmd, opts)
 end
@@ -56,10 +89,30 @@ local function create_cmd()
         }
     )
     vim.api.nvim_create_user_command(
+        'GottAsync',
+        function(opts)
+            local args = string.format("%s %s", opts.args, gott.opts.test_args)
+            gott.run_test_under_cursor_async(args)
+        end,
+        {
+            nargs = "*",
+        }
+    )
+    vim.api.nvim_create_user_command(
         'GottFile',
         function(opts)
             local args = string.format("%s %s", opts.args, gott.opts.test_args)
             gott.run_test_by_file(args)
+        end,
+        {
+            nargs = "*",
+        }
+    )
+    vim.api.nvim_create_user_command(
+        'GottFileAsync',
+        function(opts)
+            local args = string.format("%s %s", opts.args, gott.opts.test_args)
+            gott.run_test_by_file_async(args)
         end,
         {
             nargs = "*",

@@ -4,7 +4,13 @@
 
 local builtin = {}
 
-function builtin.pre_check()
+function builtin.pre_check(async)
+    -- check if Dispatch exists
+    if async and vim.fn.exists(':Dispatch') <= 0 then
+        vim.api.nvim_err_writeln("gott: Dispatch command not found, please install it first. See https://github.com/tpope/vim-dispatch for more detail.")
+        return false
+    end
+
     -- check if the current file is a go test file
     local filename = vim.fn.expand('%:p')
     if not string.match(filename, "_test.go$") then
@@ -47,6 +53,14 @@ function builtin.split(str, sep)
 end
 
 function builtin.exec(cmd, opts)
+    opts = opts or {}
+    if opts.async then
+        -- use Dispatch to run the command asynchronously
+        cmd = string.format("Dispatch %s", cmd)
+        vim.api.nvim_command(cmd)
+        return
+    end
+
     local parsedCmd = vim.api.nvim_parse_cmd(cmd, {})
 
     local output = vim.api.nvim_cmd(parsedCmd, { output = true })
